@@ -8,6 +8,7 @@ import (
 	"regexp"
 	"runtime"
 	"strconv"
+	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
@@ -64,14 +65,14 @@ func parse() {
 		log.Fatalf("Error while reading file: %s", err)
 	}
 
-	outputFile, err := os.OpenFile(saveFilePath, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0644)
+	outputFile, err := os.OpenFile(saveFilePath, os.O_WRONLY|os.O_CREATE, 0644)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 	defer outputFile.Close()
-	title := ""
-	outputFile.WriteString(string(title))
+	title := time.Now()
+	outputFile.WriteString("Creation Date and Time:  " + fmt.Sprintln(title))
 	for i := 0; i < len(result); i++ {
 		w := ""
 		if i == 0 || i > 0 && result[i].Part != result[i-1].Part {
